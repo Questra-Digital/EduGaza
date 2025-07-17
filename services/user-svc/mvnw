@@ -1,0 +1,5 @@
+#!/bin/sh
+MVN_VERSION=3.9.6
+BASE_DIR=$(dirname "$0")
+JAVA_EXE=$(which java)
+exec "$JAVA_EXE" -jar "$BASE_DIR/.mvn/wrapper/maven-wrapper.jar" "$@"

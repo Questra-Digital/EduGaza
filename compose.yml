@@ -1,0 +1,20 @@
+services:
+  app:
+    build:
+      dockerfile: ./services/user-svc/Dockerfile
+      context: ./services/user-svc
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+    environment:
+      - SPRING_PROFILES_ACTIVE=default
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+volumes:
+  mongo_data:
