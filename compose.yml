@@ -1,7 +1,6 @@
 services:
   app:
     build:
-      dockerfile: ./services/user-svc/Dockerfile
       context: ./services/user-svc
     ports:
       - "8080:8080"

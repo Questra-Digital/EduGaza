@@ -34,7 +34,7 @@
   EXPOSE 8080
   
   # Healthcheck (optional)
-  HEALTHCHECK CMD curl --fail http://localhost:8080/actuator/health || exit 1
+  # HEALTHCHECK CMD curl --fail http://localhost:8080/actuator/health || exit 1
   
   # Run the application
   ENTRYPOINT ["java", "-jar", "app.jar"]
