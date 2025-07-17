@@ -1,1 +1,0 @@
-// OtpRequest.java placeholder

@@ -1,1 +1,0 @@
-// TokenResponse.java placeholder

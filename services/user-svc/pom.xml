@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.edugaza</groupId>
-    <artifactId>user-svc</artifactId>
+    <artifactId>user</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
