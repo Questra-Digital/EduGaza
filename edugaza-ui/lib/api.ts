@@ -31,7 +31,7 @@ export const sendOTP = async (email: string): Promise<ApiResponse> => {
   }
 };
 
-export const verifyOTP = async (email: string, otp: string): Promise<ApiResponse<{ token: string; user: any }>> => {
+export const verifyOTP = async (email: string, otp: string): Promise<ApiResponse<{ accessToken: string; refreshToken: string; email: string }>> => {
   try {
     const res = await fetch(`${BASE_URL}/api/auth/verify`, {
       method: 'POST',

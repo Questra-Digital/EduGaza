@@ -8,9 +8,9 @@ export interface User {
 export const AUTH_COOKIE = 'auth_token';
 export const USER_COOKIE = 'user_data';
 
-export const setAuthToken = (token: string, userData: User) => {
-  Cookies.set(AUTH_COOKIE, token, { expires: 7, secure: true, sameSite: 'strict' });
-  Cookies.set(USER_COOKIE, JSON.stringify(userData), { expires: 7, secure: true, sameSite: 'strict' });
+export const setAuthToken = (accessToken: string, refreshToken: string, email: string) => {
+  Cookies.set(AUTH_COOKIE, accessToken, { expires: 7, secure: true, sameSite: 'strict' });
+  Cookies.set(USER_COOKIE, JSON.stringify({email, isAuthenticated: true }), { expires: 7, secure: true, sameSite: 'strict' });
 };
 
 export const getAuthToken = (): string | null => {

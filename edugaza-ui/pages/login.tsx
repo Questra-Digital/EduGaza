@@ -41,7 +41,7 @@ export default function LoginPage() {
     try {
       const response = await verifyOTP(email, otp);
       if (response.success && response.data) {
-        setAuthToken(response.data.token, response.data.user);
+        setAuthToken(response.data.accessToken, response.data.refreshToken, response.data.email);
         router.push('/home');
       } else {
         setError(response.error || 'Invalid OTP');

@@ -46,7 +46,7 @@ public class AuthService {
         user.setRefreshToken(refreshToken);
         userRepository.save(user);
 
-        return new TokenResponse(accessToken, refreshToken);
+        return new TokenResponse(accessToken, refreshToken, email);
     }
 
     public TokenResponse refreshToken(String refreshToken) {
@@ -62,6 +62,6 @@ public class AuthService {
         user.setRefreshToken(newRefreshToken);
         userRepository.save(user);
 
-        return new TokenResponse(newAccessToken, newRefreshToken);
+        return new TokenResponse(newAccessToken, newRefreshToken, email);
     }
 }
