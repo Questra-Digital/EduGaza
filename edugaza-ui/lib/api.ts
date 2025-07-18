@@ -7,7 +7,7 @@ export interface VerifyOTPRequest {
   email: string;
   otp: string;
 }
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface ApiResponse<T = any> {
   success: boolean;
   data?: T;
@@ -26,6 +26,7 @@ export const sendOTP = async (email: string): Promise<ApiResponse> => {
     const json = await res.json();
     if (!res.ok) return { success: false, error: json?.error || res.statusText };
     return { success: true, data: json };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     return { success: false, error: err.message || 'Network error' };
   }
@@ -41,6 +42,7 @@ export const verifyOTP = async (email: string, otp: string): Promise<ApiResponse
     const json = await res.json();
     if (!res.ok) return { success: false, error: json?.error || res.statusText };
     return { success: true, data: json };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     return { success: false, error: err.message || 'Network error' };
   }

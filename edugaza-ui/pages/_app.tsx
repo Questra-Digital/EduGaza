@@ -1,13 +1,33 @@
 import '../styles/globals.css';
-import type { AppProps } from 'next/app';
+import Head from 'next/head';
+import { AppProps } from 'next/app';
 import { useEffect } from 'react';
 
-export default function App({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js');
+    if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('/sw.js')
+        .then((reg) => console.log('SW registered:', reg.scope))
+        .catch((err) => console.error('SW registration failed:', err));
+
+      navigator.serviceWorker.addEventListener('message', (event) => {
+        if (event.data?.type === 'NEW_SW_AVAILABLE') {
+          window.location.reload();
+        }
+      });
     }
   }, []);
 
-  return <Component {...pageProps} />;
+  return (
+    <>
+      <Head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#317EFB" />
+      </Head>
+      <Component {...pageProps} />
+    </>
+  );
 }
+
+export default MyApp;

@@ -93,7 +93,7 @@ export default function LoginPage() {
         ) : (
           <form onSubmit={handleVerifyOTP} className="space-y-4">
             <div className="text-center text-gray-600 mb-4">
-              We've sent a verification code to<br />
+              We have sent a verification code to<br />
               <strong>{email}</strong>
             </div>
             <Input

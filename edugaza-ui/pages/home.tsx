@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Layout } from '../components/Layout';
 import { Button } from '../components/Button';
 import { useAuth } from '../hooks/useAuth';
-import { useOfflineStatus } from '../hooks/useOfflineStatus';
+// import { useOfflineStatus } from '../hooks/useOfflineStatus';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 
 
@@ -14,7 +14,7 @@ interface HomePageProps {
 
 export default function HomePage({ buildTime }: HomePageProps) {
   const { user, loading, isAuthenticated, logout } = useAuth();
-  const isOffline = useOfflineStatus();
+  // const isOffline = useOfflineStatus();
   const router = useRouter();
 
   useEffect(() => {
