@@ -17,6 +17,27 @@ Install the following softwares for the setup.
 - Git
 - Docker
 
+### Add configuration files
+
+1- Add `.env` file to folder `eduqaza-ui` with following content
+```
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+NEXT_PUBLIC_API_URL=http://localhost:8080
+NEXT_PUBLIC_APP_NAME=Edu Gaza
+```
+
+2- Add `application.properties` in folder `services/user-svc/src/main/resources` with following content
+```
+spring.data.mongodb.uri=mongodb://mongo:27017/otp-auth
+spring.mail.host=smpt.mailserver.com
+spring.mail.port=123
+spring.mail.username=yourmeail@doamin.com
+spring.mail.password=yourpassword
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.smtp.from=jawad@questra.digital
+```
+
 ### Step to run the project
 Use the following steps to start the project locally
 
