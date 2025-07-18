@@ -5,12 +5,6 @@ const isDev = process.env.NODE_ENV === 'development';
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  // Internationalization (if needed)
-  i18n: {
-    locales: ['en'],
-    defaultLocale: 'en',
-  },
-  swcMinify: true,
   compiler: {
     removeConsole: process.env.NODE_ENV !== 'development'
   },
