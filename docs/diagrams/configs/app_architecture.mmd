@@ -1,0 +1,156 @@
+graph TB
+    %% Frontend Layer
+    subgraph "Frontend Layer"
+        FE[Frontend Service<br/>React/Vue/Angular]
+    end
+    
+    %% API Gateway Layer
+    subgraph "API Gateway Layer"
+        TRAEFIK[Traefik<br/>API Gateway<br/>Load Balancer<br/>Reverse Proxy]
+    end
+    
+    %% Microservices Layer
+    subgraph "Microservices Layer"
+        subgraph "Auth Service Stack"
+            AUTH[Auth Service<br/>Go<br/>JWT/OAuth]
+            REDIS1[Redis Cache<br/>Auth Sessions]
+            MONGO1[(MongoDB<br/>Auth DB<br/>Users/Tokens)]
+            AUTH --- REDIS1
+            AUTH --- MONGO1
+        end
+        
+        subgraph "User Profile Service Stack"
+            USER[User Profile Service<br/>Go<br/>User Management]
+            REDIS2[Redis Cache<br/>User Data]
+            MONGO2[(MongoDB<br/>Profile DB<br/>User Profiles)]
+            USER --- REDIS2
+            USER --- MONGO2
+        end
+
+        subgraph "Parental Control Service Stack"
+            PARENT[Parental Control Service<br/>Go<br/>Access Control]
+            REDIS3[Redis Cache<br/>Parental Rules]
+            MONGO3[(MongoDB<br/>Control DB<br/>Parental Settings)]
+            PARENT --- REDIS3
+            PARENT --- MONGO3
+        end
+        
+        subgraph "Stories Service Stack"
+            STORY[Stories Service<br/>Go<br/>Content Management]
+            REDIS4[Redis Cache<br/>Stories Metadata]
+            MONGO4[(MongoDB<br/>Content DB<br/>Stories/Media)]
+            STORY --- REDIS4
+            STORY --- MONGO4
+        end
+        
+        subgraph "Learning Outcome Service Stack"
+            LEARN[Learning Outcome Service<br/>Go<br/>Progress Tracking]
+            REDIS5[Redis Cache<br/>Learning Data]
+            MONGO5[(MongoDB<br/>Learning DB<br/>Outcomes/Progress)]
+            LEARN --- REDIS5
+            LEARN --- MONGO5
+        end
+        
+        subgraph "Playback Service Stack"
+            PLAY[Playback Service<br/>Go<br/>Media Streaming]
+            REDIS6[Redis Cache<br/>Playback State]
+            MONGO6[(MongoDB<br/>Playback DB<br/>Media/State)]
+            PLAY --- REDIS6
+            PLAY --- MONGO6
+        end
+        
+        subgraph "Assessment Service Stack"
+            ASSESS[Assessment Service<br/>Go<br/>Quiz/Tests]
+            REDIS7[Redis Cache<br/>Assessment Data]
+            MONGO7[(MongoDB<br/>Assessment DB<br/>Quiz/Results)]
+            ASSESS --- REDIS7
+            ASSESS --- MONGO7
+        end
+        
+        subgraph "Report Service Stack"
+            REPORT[Report Service<br/>Go<br/>Analytics]
+            REDIS8[Redis Cache<br/>Report Cache]
+            MONGO8[(MongoDB<br/>Reports DB<br/>Analytics)]
+            REPORT --- REDIS8
+            REPORT --- MONGO8
+        end
+        
+        subgraph "Notification Service Stack"
+            NOTIFY[Notification Service<br/>Go<br/>Alerts/Messages]
+            REDIS9[Redis Cache<br/>Notifications]
+            MONGO9[(MongoDB<br/>Notification DB<br/>Messages/Templates)]
+            NOTIFY --- REDIS9
+            NOTIFY --- MONGO9
+        end
+    end
+    
+    %% Message Queue Layer
+    subgraph "Message Queue Layer"
+        NATS[NATS<br/>Message Broker<br/>Event Streaming<br/>Pub/Sub]
+    end
+
+    %% External Services
+    subgraph "External Services"
+        CDN[CDN<br/>Media Delivery]
+        STORAGE[Object Storage<br/>S3/MinIO]
+    end
+    
+    %% Frontend to Gateway
+    FE --> TRAEFIK
+    
+    %% Gateway to Services
+    TRAEFIK --> AUTH
+    TRAEFIK --> USER
+    TRAEFIK --> PARENT
+    TRAEFIK --> STORY
+    TRAEFIK --> LEARN
+    TRAEFIK --> PLAY
+    TRAEFIK --> ASSESS
+    TRAEFIK --> REPORT
+    TRAEFIK --> NOTIFY
+    
+    %% Services to Database
+    %% Databases are now part of each service stack
+    
+    %% External Service Connections
+    FE --> CDN
+    FE --> STORAGE
+    
+    %% Services to NATS
+    AUTH --> NATS
+    USER --> NATS
+    PARENT --> NATS
+    STORY --> NATS
+    LEARN --> NATS
+    PLAY --> NATS
+    ASSESS --> NATS
+    REPORT --> NATS
+    NOTIFY --> NATS
+    
+    %% NATS to Services (bidirectional)
+    NATS --> AUTH
+    NATS --> USER
+    NATS --> PARENT
+    NATS --> STORY
+    NATS --> LEARN
+    NATS --> PLAY
+    NATS --> ASSESS
+    NATS --> REPORT
+    NATS --> NOTIFY
+    
+    %% Styling
+    classDef frontend fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef gateway fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef service fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef cache fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef queue fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+    classDef database fill:#e0f2f1,stroke:#004d40,stroke-width:2px
+    classDef external fill:#f1f8e9,stroke:#33691e,stroke-width:2px
+    
+    class FE frontend
+    class TRAEFIK gateway
+    class AUTH,USER,PARENT,STORY,LEARN,PLAY,ASSESS,REPORT,NOTIFY service
+    class REDIS1,REDIS2,REDIS3,REDIS4,REDIS5,REDIS6,REDIS7,REDIS8,REDIS9 cache
+    class NATS queue
+    class MONGO1,MONGO2,MONGO3,MONGO4,MONGO5,MONGO6,MONGO7,MONGO8,MONGO9 database
+    class CDN,STORAGE external

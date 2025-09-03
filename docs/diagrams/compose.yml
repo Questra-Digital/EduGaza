@@ -1,0 +1,9 @@
+services:
+  generator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./configs:/app/configs
+      - ./svgs:/app/svgs
+      - ./main.js:/app/main.js
