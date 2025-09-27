@@ -1,0 +1,9 @@
+version: "3.9"
+
+services:
+  notification-service:
+    build: .
+    container_name: notification-service
+    ports:
+      - "4000:4000"
+    restart: always
