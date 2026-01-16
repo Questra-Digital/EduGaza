@@ -1,0 +1,30 @@
+# Step 1: Use official Golang image to build the app
+FROM golang:1.22-alpine AS builder
+
+# Set working directory
+WORKDIR /app
+
+# Copy go.mod and go.sum if they exist (for dependency caching)
+COPY go.mod go.sum* ./
+RUN go mod download || true
+
+# Copy the source code
+COPY . .
+
+# Build the Go binary
+RUN go build -o notification-service main.go
+
+# Step 2: Create a lightweight runtime container
+FROM alpine:3.19
+
+# Set working directory
+WORKDIR /root/
+
+# Copy the binary from the builder stage
+COPY --from=builder /app/notification-service .
+
+# Expose port 4000
+EXPOSE 4000
+
+# Run the service
+CMD ["./notification-service"]
